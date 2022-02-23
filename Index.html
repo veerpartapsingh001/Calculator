@@ -7,25 +7,29 @@
     <title>Calc</title>
 </head>
 <body>
-    <div class="f_calc"></div>
     <div id="calculator">
+        <!-- screen is where the text will appear -->
         <div id="screen">
             <form name='calc'>
-                <div id="screen_max"><input type="text" id="sp1" class="sp1" readonly="Number" value="" name="numb"></div>
+                <div>
+                    <input type="text" id="sp1" class="sp1" readonly="Number" value="" name="numb"></div>
             </form>    
         </div>
-        <div id="teclas">
+        <!--keys are all the buttons-->
+        <div id="keys">
+            <!--s1 s2 s4 are all difrent sections-->
            <section id="s1">
+            <!-- i made two diffrent clearning buttons cause i came arros a peoblem when i cleanred the screemn the info was still memorized and being used so i wanted to make it a way for the user to refresh fully-->
             <button id="bc" onclick="document.calc.numb.value=''">C</button>
-            <button id="bce" onclick="inserirnumero()">CE</button>
+             <button id="bc" onclick="history.go(0)">CE</button>
            </section> 
-           
+           <!---useinf the onclick method and id to make sure javascript can pick up on what im trying to pull-->
            <section id="s2">
             <button id="n7" onclick="calculator.digits(calculator.numbers[7])">7</button>
             <button id="n8" onclick="calculator.digits(calculator.numbers[8])">8</button>
             <button id="n9" onclick="calculator.digits(calculator.numbers[9])">9</button>
             </section>
-            
+            <!--just diffrent rows and numbers  -->
             <section id="s3">
             <button id="n4" onclick="calculator.digits(calculator.numbers[4])">4</button>
             <button id="n5" onclick="calculator.digits(calculator.numbers[5])">5</button>
@@ -37,9 +41,9 @@
             <button id="n2" onclick="calculator.digits(calculator.numbers[2])">2</button>
             <button id="n3" onclick="calculator.digits(calculator.numbers[3])">3</button>
             </section>
-            
+            <!-- a speacial section just for zero to cover the bottom half-->
             <section id="s5"><button id="n0" onclick="calculator.digits(calculator.numbers[0])">0</button></section>
-
+            <!-- ids named after the functions vocab name -->
             <section id="s6">
                 <div id="divide"><button id="b_divide" onclick="calculator.digits_simb(calculator.symbols[3])"><span>/</span></button></div>
                 <div id="multp"><button id="b_multp" onclick="calculator.digits_simb(calculator.symbols[2])"><span>*</span></button></div>
@@ -49,71 +53,70 @@
             </section>
         </div>    
     </div>   
-
+    <!-- just linked javascript in html to see html code quickly -->
 <script type="text/javascript">
-    
+    /* created a function to caall documents and there respected values  */
  function enterNumber(){
     document.calc.numb.value = '0';
     document.calc.txt.value = '';
  }; 
- 
+ /* making all the calculators into constants basicly memory short is a space */
  const calculator= {   
      numbers: [0,1,2,3,4,5,6,7,8,9],
      symbols: ['+','-','*','/','='],
-     
-     memoria:[],
-     memoria_curta: '',
-     
+    
+     memory:[],
+     memory_short: '',
+     /* this function is what the screen will work with */
      digits:  function(x){
             document.calc.numb.value += x;
-           this.memoria_curta += '' + x;
+           this.memory_short += '' + x;
             
             },
-            /**/
+            /*this is hwo the numbers get pushed after the numbers picked*/
     digits_simb: function(x){
          document.calc.numb.value += x;
-          this.memoria.push(this.memoria_curta);
-         this.memoria.push(x);
-         this.memoria_curta= '';
+          this.memory.push(this.memory_short);
+         this.memory.push(x);
+         this.memory_short= '';
 
          
      },
-
-    
+  /* the results come in to a the function*/
+     result: function(){
+     // this. refers to the current object in a method or constructor
+     //  eliminate the confusion between class attributes and parameters with the same name it helps clear things u too
+       this.memory.push(this.memory_short);
+       // creating
        
-           
-     resultado: function(){
-     
-       this.memoria.push(this.memoria_curta);
-       
-       for (i=0; i <= this.memoria.length; i++){      
-            if(this.memoria[i] === this.symbols[0]){
-                let soma = Number(this.memoria[i-1]) + Number(this.memoria[i+1]);
+       for (i=0; i <= this.memory.length; i++){      
+            if(this.memory[i] === this.symbols[0]){
+                let soma = Number(this.memory[i-1]) + Number(this.memory[i+1]);
                   document.calc.numb.value = soma; 
                  
-                  this.memoria_curta = soma;
-                  console.log(this.memoria);
+                  this.memory_short = soma;
+                  console.log(this.memory);
               }
-              if(this.memoria[i] === this.symbols[1]){
-                let soma = Number(this.memoria[i-1]) - Number(this.memoria[i+1]);
+              if(this.memory[i] === this.symbols[1]){
+                let soma = Number(this.memory[i-1]) - Number(this.memory[i+1]);
                   document.calc.numb.value = soma; 
                  
-                  this.memoria_curta = soma;
-                  console.log(this.memoria);
+                  this.memory_short = soma;
+                  console.log(this.memory);
               }
-              if(this.memoria[i] === this.symbols[2]){
-                let soma = Number(this.memoria[i-1]) * Number(this.memoria[i+1]);
+              if(this.memory[i] === this.symbols[2]){
+                let soma = Number(this.memory[i-1]) * Number(this.memory[i+1]);
                   document.calc.numb.value = soma; 
                  
-                  this.memoria_curta = soma;
-                  console.log(this.memoria);
+                  this.memory_short = soma;
+                  console.log(this.memory);
               }
-              if(this.memoria[i] === this.symbols[3]){
-                let soma = Number(this.memoria[i-1]) / Number(this.memoria[i+1]);
+              if(this.memory[i] === this.symbols[3]){
+                let soma = Number(this.memory[i-1]) / Number(this.memory[i+1]);
                   document.calc.numb.value = soma; 
                  
-                  this.memoria_curta = soma;
-                  console.log(this.memoria);
+                  this.memory_short = soma;
+                  console.log(this.memory);
               }
              
                
@@ -121,7 +124,7 @@
     }
 
            };
-                  
+
 </script>
 
 </body>
